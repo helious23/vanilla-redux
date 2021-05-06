@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import ToDo from "../components/ToDo";
-import { actionCreators } from "../store";
+import { add } from "../store";
 
 function Home({ toDos, addToDo }) {
   const [text, setText] = useState("");
@@ -40,7 +40,7 @@ function mapStateToProps(state, ownProps) {
 // store 의 state 를 변경하기 위해(dispatch) connect 의 2nd argument 로 mapDispatchToProps 함수 생성 후 dispatch 를 obj 로 return
 function mapDispatchToProps(dispatch) {
   return {
-    addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+    addToDo: (text) => dispatch(add(text)),
   };
 }
 
