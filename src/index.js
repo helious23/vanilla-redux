@@ -27,7 +27,7 @@ const reducer = (state = [], action) => {
       const newToDoObj = { text: action.text, id: Date.now() };
       return [newToDoObj, ...state]; // Never ever ever mutate state(ex Array.push), just create and return new state by object
     case DELETE_TODO:
-      const cleaned = (toDo) => toDo.id !== action.id, 10
+      const cleaned = (toDo) => toDo.id !== action.id;
       return state.filter(cleaned); // without Mutating the state, use filter
     default:
       return state;
