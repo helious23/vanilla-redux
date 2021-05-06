@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { actionCreators } from "../store";
 
-function Home({ toDos }) {
+function Home({ toDos, addToDo }) {
   const [text, setText] = useState("");
   function onChange(e) {
     setText(e.target.value);
   }
   function onSubmit(e) {
     e.preventDefault();
+    addToDo(text);
     setText("");
   }
 
@@ -24,8 +26,17 @@ function Home({ toDos }) {
 }
 
 // store 의 state 를 component(Home) 에서 props 로 받기 위해 connect 함수 안에 실행할 함수 생성 후 state 를 obj 로 return
+// like getState()
+// 필요 없을 경우 connect(null, ...) 으로 작성
 function mapStateToProps(state, ownProps) {
   return { toDos: state };
 }
 
-export default connect(mapStateToProps)(Home);
+// store 의 state 를 변경하기 위해(dispatch) connect 의 2nd argument 로 mapDispatchToProps 함수 생성 후 dispatch 를 obj 로 return
+function mapDispatchToProps(dispatch) {
+  return {
+    addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
