@@ -13,15 +13,22 @@ const countModifier = (count = 0, action) => {
   return count;
 };
 
+number.innerText = 0;
+
 const countStore = createStore(countModifier);
 
-countStore.dispatch({ type: "ADD" });
-countStore.dispatch({ type: "ADD" });
-countStore.dispatch({ type: "ADD" });
-countStore.dispatch({ type: "ADD" });
-countStore.dispatch({ type: "ADD" });
-countStore.dispatch({ type: "ADD" });
-countStore.dispatch({ type: "ADD" });
-countStore.dispatch({ type: "MINUS" });
+const onChange = () => {
+  number.innerText = countStore.getState();
+};
+countStore.subscribe(onChange); // subscribe : store 에 변화가 있을 때 onChange 호출
 
-console.log(countStore.getState());
+const handleAdd = () => {
+  countStore.dispatch({ type: "ADD" }); // dispatch : communicate with the store
+};
+
+const handleMinus = () => {
+  countStore.dispatch({ type: "MINUS" });
+};
+
+add.addEventListener("click", handleAdd);
+minus.addEventListener("click", handleMinus);
