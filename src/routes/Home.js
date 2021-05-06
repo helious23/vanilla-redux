@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 
-function Home() {
+function Home({ toDos }) {
   const [text, setText] = useState("");
   function onChange(e) {
     setText(e.target.value);
@@ -17,9 +18,14 @@ function Home() {
         <input type="text" value={text} onChange={onChange} />
         <button>Add</button>
       </form>
-      <ul></ul>
+      <ul>{JSON.stringify(toDos)}</ul>
     </>
   );
 }
 
-export default Home;
+// store 의 state 를 component(Home) 에서 props 로 받기 위해 connect 함수 안에 실행할 함수 생성 후 state 를 obj 로 return
+function mapStateToProps(state, ownProps) {
+  return { toDos: state };
+}
+
+export default connect(mapStateToProps)(Home);
